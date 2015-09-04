@@ -1,0 +1,281 @@
+All interface functions have PythonDoc style documentation for easy referencing. The simplest way to engage the system is to start with the
+iPython interface
+"
+  In [1]: import mts
+
+  In [2]: mts.MTS?
+  Type:        classobj
+  String Form:    mts.mts.MTS
+  Namespace:    Interactive
+  File:        /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Docstring:
+      Initializing a MTS object will create an interface to the various modules and available devices.
+      All available modules will be initiated, all sources enables and all signal path outputs disabled, ready for usage.
+      All implementation constants will be assigned.
+
+      @param port  String: Series port associated with MTS controller
+      @param baudrate Integer: Baudrate of MTS controller series connection
+      @param valon String: Series port associated with Valon controller
+      @param synth Integer: Synthesizer to connect to from ValonSynth interface
+      @param timeout Integer: Time for waiting on response from Series ports
+      @param config_file String: Name of file containing MTS setup and usage parameters
+
+  Constructor information:
+  Definition:    mts.MTS(self, port='/dev/ttyUSB0', baudrate=115200, valon='/dev/ttyUSB1', synth=8, timeout=1, config_file='/etc/mts/default')
+"
+
+A handle to the MTS controllers is created by providing the port names associated with each of the 2 devices. Only the controller port is
+required, the Valon port is optional and can be ignored when only noise signals are required.
+"
+  In [3]: mymts = mts.MTS(port='/dev/ttyUSB1', valon='/dev/ttyUSB0')
+  Port /dev/ttyUSB1 is open
+  Initiating ucs1, module 1
+  Initiating ucs2, module 2
+  Initiating cs1, module 3
+  Initiating comb1, module 4
+  Initiating comb2, module 5
+"
+
+After testing is completed, it is suggested that the user "exit" the MTS controller, which will set the devices to default wait states.
+"
+  In [9]: mymts.exit()
+  Closing port /dev/ttyUSB1
+"
+
+
+General functionality:
+Refer to example scripts described in README for usage examples
+
+Setting up noise signal output:
+a)
+Enabling a noise signal of a specified power in dBm and output from selected combiner
+mymts.set_noise(output='comb1', uncorr_pwr=-27)
+"
+  In [8]: mymts.set_noise?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.set_noise of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.set_noise(self, output, uncorr_pwr=None, corr_pwr=None)
+  Docstring:
+      Enable either or both the uncorrelated and correlated noise signals of a selected combiner output.
+
+      @param output     String: Name of combiner from which output is expected
+      @param uncorr_pwr Float: [Optional] Signal output power for uncorrelated noise source in dBm
+      @param corr_pwr   Float: [Optional] Signal output power for correlated noise source in dBm
+
+      @return None
+"
+
+b)
+Read current noise power measurement
+mymts.get_noise(output='comb1', cal_tbl=mymts.CS_NOISE)
+"
+  In [7]: mymts.get_noise?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.get_noise of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.get_noise(self, output, cal_tbl=None)
+  Docstring:
+      Read the noise power measured at a selected output combiner module.
+
+      @param output  String: Name of combiner from which output is expected
+      @param cal_tbl Array: [Optional] Specify the calibration table associated with the source to calculate power to attenuation convertion
+
+      @return Float: Output power read from combiner sensor
+"
+
+c)
+Disable / Stop noise signal output
+mymts.disable_noise(output='comb1', uncorr_src=True)
+"
+  In [9]: mymts.disable_noise?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.disable_noise of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.disable_noise(self, output, uncorr_src=False, corr_src=False)
+  Docstring:
+      Disable either or both the uncorrelated and correlated noise signals of a selected combiner output.
+
+      @param output     String: Name of combiner from which output is expected
+      @param uncorr_src Float: [Optional] Disable noise output from uncorrelated noise source
+      @param corr_src   Float: [Optional] Disable noise output from correlated noise source
+
+      @return None
+"
+
+
+Setting up CW signal output:
+a)
+Enabling a CW signal of a specified power in dBm, frequency in MHz and output from selected combiner
+mymts.set_cw(output='comb2', uncorr_pwr=-27, uncorr_freq=220.)
+"
+  In [10]: mymts.set_cw?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.set_cw of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.set_cw(self, output, uncorr_pwr=None, uncorr_freq=None, corr_pwr=None, corr_freq=None)
+  Docstring:
+      Enable either or both the uncorrelated and correlated CW signals of a selected combiner output.
+
+      @param output      String: Name of combiner from which output is expected
+      @param uncorr_pwr  Float: [Optional] Signal output power for uncorrelated CW source in dBm
+      @param uncorr_freq Float: [Optional] Uncorrelated CW signal frequency in MHz
+      @param corr_pwr    Float: [Optional] Signal output power for correlated CW source in dBm
+      @param corr_freq   Float: [Optional] Correlated CW signal frequency in MHz
+
+      @return None
+"
+
+b)
+Read current CW power measurement
+mymts.get_cw(output="comb2")
+"
+  In [11]: mymts.get_cw?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.get_cw of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.get_cw(self, output, cal_tbl=None)
+  Docstring:
+      Read the CW power measured at a selected output combiner module.
+
+      @param output  String: Name of combiner from which output is expected
+      @param cal_tbl Array: [Optional] Specify the calibration table associated with the source to calculate power to attenuation convertion
+
+      @return Float: Output power read from combiner sensor
+"
+
+c)
+Set CW output frequency in MHz
+"
+  In [12]: mymts.set_freq?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.set_freq of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.set_freq(self, output, uncorr_freq=None, corr_freq=None)
+  Docstring:
+      Set the CW frequency of the selected source at the requested combiner output.
+
+      @param output     String: Name of combiner from which output is expected
+      @param uncorr_freq Float: [Optional] Uncorrelated CW signal frequency in MHz
+      @param corr_freq   Float: [Optional] Correlated CW signal frequency in MHz
+
+      @return None
+"
+
+d)
+Read the current CW frequency in MHz
+"
+  In [13]: mymts.get_freq?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.get_freq of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.get_freq(self, output, uncorr_src=False, corr_src=False)
+  Docstring:
+      Read the CW frequency of the selected source at the requested combiner output.
+
+      @param output     String: Name of combiner from which output is expected
+      @param uncorr_src Float: [Optional] Read CW frequency setting of uncorrelated CW source
+      @param corr_src   Float: [Optional] Read CW frequency setting of correlated CW source
+
+      @return Float: CW frequency in MHz
+"
+
+e)
+Disable / Stop noise signal output
+mymts.disable_cw(output='comb2', uncorr_src=True)
+"
+  In [14]: mymts.disable_cw?
+  Type:       instancemethod
+  Base Class: <type 'instancemethod'>
+  String Form:    <bound method MTS.disable_cw of <mts.mts.MTS instance at 0xae2a10c>>
+  Namespace:  Interactive
+  File:       /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition: mymts.disable_cw(self, output, uncorr_src=False, corr_src=False)
+  Docstring:
+      Disable either or both the uncorrelated and correlated CW signals of a selected combiner output.
+
+      @param output     String: Name of combiner from which output is expected
+      @param uncorr_src Float: [Optional] Disable CW output from uncorrelated CW source
+      @param corr_src   Float: [Optional] Disable CW output from correlated CW source
+
+      @return None
+"
+
+
+Modular Interface:
+
+Power users can access the system on a more modular level.
+Any of the source modules can either be addressed generically via the combiner to which it is associated:
+"
+  In [4]: mymts.comb1.ucs.set_noise_atten?
+  Type:        instancemethod
+  Base Class:    <type 'instancemethod'>
+  String Form:    <bound method mts_mod.set_noise_atten of <mts.mts.mts_mod instance at 0xa3be64c>>
+  Namespace:    Interactive
+  File:        /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition:    mymts.comb1.ucs.set_noise_atten(self, atten, verbose=False)
+  Docstring:
+      Set attenuator in noise signal path
+
+      @param atten   Float: Amount of attenuation (dB) to apply
+      @param verbose Boolean: Verbose output messages
+"
+
+Or directly using the source module name:
+"
+  In [5]: mymts.ucs1.set_noise_atten?
+  Type:        instancemethod
+  Base Class:    <type 'instancemethod'>
+  String Form:    <bound method mts_mod.set_noise_atten of <mts.mts.mts_mod instance at 0xa3be64c>>
+  Namespace:    Interactive
+  File:        /usr/local/lib/python2.7/dist-packages/mts/mts.py
+  Definition:    mymts.ucs1.set_noise_atten(self, atten, verbose=False)
+  Docstring:
+      Set attenuator in noise signal path
+
+      @param atten   Float: Amount of attenuation (dB) to apply
+      @param verbose Boolean: Verbose output messages
+"
+
+Both of the above mentioned methods of controlling the source modules will perform the same functions on the source module devices.
+The names currently associated with each module of the MTS:
+Module      Name    Description
+Combiner 1  comb1   Channel 1 output module
+Combiner 2  comb2   Channel 2 output module
+Source 1    ucs1    Uncorrelated source module associated with combiner 1 output
+Source 2    ucs2    Uncorrelated source module associated with combiner 2 output
+Source 3    cs1     Correlated source module associated with both combiner outputs
+
+During initiation of the MTS object all sources are enabled, but the signal paths are disabled. These need to be enabled by the user when the
+signal output from that source is required.
+"
+  In [6]: mymts.comb2.ucs.noise_output(enable=True, verbose=True)
+  Enable noise output True
+"
+Functions available for each signal output include, setting the noise amplitude, CW amplitude, CW frequency and combined output signal
+amplitude.
+"
+  In [7]: mymts.comb2.ucs.set_noise_atten(atten=mymts.comb2.ucs.MIN_ATTEN, verbose=True)
+  Setting noise attenuation to  0.0 dB
+"
+To stop signal output:
+"
+  In [8]: mymts.comb2.ucs.noise_output(enable=False, verbose=True)
+  Enable noise output False
+"
+
+

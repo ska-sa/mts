@@ -1,0 +1,25 @@
+Installation:
+
+Installation of the MTS interface software using pip, or via the Python easy install process.
+
+    The MTS interface uses the Python Valon library provided by the NRAO:
+    https://github.com/nrao/ValonSynth
+    Install the package using the information in the README.
+
+    Download the software package as a repository from SKASA git-hub user
+    Requires: 'valon_synth', 'serial', 'iniparse', 'inspect', 'signal', 'optparse', 'numpy'
+
+    Easy Install
+    Build Package:
+        python setup.py build
+    Installation:
+        sudo python setup.py install
+
+Both packages install the Python interface source to the relevant python/dist-packages/ directory in /usr/local/lib/
+
+In addition the MTS will install:
+a default config file and calibration .data files to /etc/mts
+as well as additional user and example scripts to /usr/local/bin
+
+The config file contains setup parameters that is used as defaults by the MTS and can be edited/updated by the user to update configuration or other changes.
+
