@@ -71,12 +71,13 @@ def read(device, address):
 # serial_comm = serial.Serial(port='/dev/ttyUSB1', baudrate=115200, timeout=1)
 serial_comm = serial.Serial(port='/dev/ttyUSB1', baudrate=115200)
 
-# Establish communication
-try:
- serial_comm.open()
-except Exception as e:
-  print str(e)
-  sys.exit(1)
+if not serial_comm.isOpen():
+  # Establish communication
+  try:
+    serial_comm.open()
+  except Exception as e:
+    print 'Error:', str(e)
+    sys.exit(1)
 
 if serial_comm.isOpen():
   print 'port %s is open' % serial_comm.name
