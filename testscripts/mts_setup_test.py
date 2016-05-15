@@ -68,8 +68,7 @@ def read(device, address):
 
 
 # Set up serial comms
-# serial_comm = serial.Serial(port='/dev/ttyUSB1', baudrate=115200, timeout=1)
-serial_comm = serial.Serial(port='/dev/ttyUSB1', baudrate=115200)
+serial_comm = serial.Serial(port='/dev/ttyUSB1', baudrate=115200, timeout=1)
 
 if not serial_comm.isOpen():
   # Establish communication
