@@ -25,6 +25,16 @@ To connect to the devices use the dmesg command to get the assigned port
     $ dmesg | grep cp210x  # MTS
     cp210x converter now attached to ttyUSB1
 
+## Testing connectivity
+
+The following checks Valon connectivity:
+
+    $ mts/valon_api.py -p /dev/ttyUSB0
+
+The following checks MTS connectivity:
+
+    $ mts/mts_api.py -p /dev/ttyUSB1
+
 ## Summary of example script:
 
 The MTS interface will install user scripts to `/usr/local/bin/`.  To run these
