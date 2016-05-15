@@ -891,13 +891,13 @@ class MTS(MTSAPI):
             if uncorr_freq:
                 combiner.ucs.set_freq(freq_mhz=uncorr_freq)
                 if abs(combiner.ucs.get_freq() - uncorr_freq) > 0:
-                    raise RuntimeError('Could not set requested frequency %f MHz' % freq_mhz)
+                    raise RuntimeError('Could not set requested frequency %f MHz' % uncorr_freq)
         if corr_pwr:
             enable_cw(comb=combiner, src=combiner.cs, pwr=corr_pwr, cal_tbl=self.CS_CW)
             if corr_freq:
                 combiner.cs.set_freq(freq_mhz=corr_freq)
                 if abs(combiner.cs.get_freq() - corr_freq) > 0:
-                    raise RuntimeError('Could not set requested frequency %f MHz' % freq_mhz)
+                    raise RuntimeError('Could not set requested frequency %f MHz' % corr_freq)
 
     def get_cw(self, output, cal_tbl=None):
         """
