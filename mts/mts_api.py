@@ -36,27 +36,27 @@ class MTSAPI():
     def __init__(self, port='/dev/ttyUSB0', baudrate=115200, timeout=1):
 
         # Set up serial comms
-        self.port = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
+        self._port = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
         # Establish communication
         try:
-            self.port.open()
+            self._port.open()
         except Exception as e:
             raise DeviceError('Fatal', str(e))
         # Initiate data transfer
-        if self.port.isOpen():
-            print 'Port %s is open' % self.port.name
+        if self._port.isOpen():
+            print 'Port %s is open' % self._port.name
             try:
-                self.port.flushInput()  # flush input buffer, discarding all its contents
-                self.port.flushOutput()  # flush output buffer, aborting current output and discard all that is in buffer
+                self._port.flushInput()  # flush input buffer, discarding all its contents
+                self._port.flushOutput()  # flush output buffer, aborting current output and discard all that is in buffer
             except Exception as e:
                 raise DeviceError('Fatal', str(e))
         else:
             # Closing before exit
             try:
-                self.port.close()
+                self._port.close()
             except Exception as e:
                 raise DeviceError('Fatal', str(e))
-            raise DeviceError('Fatal', 'Serial port %s not open, cleanup and exit' % self.port.name)
+            raise DeviceError('Fatal', 'Serial port %s not open, cleanup and exit' % self._port.name)
 
     def __get_address__(self, mod, reg, read=False):
         """
@@ -74,15 +74,15 @@ class MTSAPI():
     def __close__(self):
         """Close serial connection"""
         # Closing before exit
-        print 'Closing port %s' % self.port.name
-        self.port.close()
+        print 'Closing port %s' % self._port.name
+        self._port.close()
 
     def ping(self):
         """Ping open serial port"""
         # try to ping the controller
-        self.port.write(bytearray(self.CTRL_PING))
+        self._port.write(bytearray(self.CTRL_PING))
 ###     time.sleep(0.01)
-        rtrn_byte = self.port.read(1)
+        rtrn_byte = self._port.read(1)
         # print repr(self.CTRL_PING), repr(rtrn_byte)
         if ord(rtrn_byte) != ord(self.CTRL_PING):
             raise DeviceError('Fatal', 'Could not ping serial port')
@@ -106,9 +106,9 @@ class MTSAPI():
         for byte in range(0, 4):
             write_array.append((data >> (byte*8)) & 0xFF)
         # print 'writing:', repr(write_array)
-        self.port.write(write_array)
+        self._port.write(write_array)
 ###     time.sleep(0.01) # time.sleep(0.5)
-        rtrn_val = bytearray(self.port.read(1))[0]
+        rtrn_val = bytearray(self._port.read(1))[0]
         if ord(self.RTRN_SUCCESS) != rtrn_val:
             if rtrn_val == ord(self.RTRN_OVERFLOW):
                 raise DeviceError('Error', 'Could not write data to serial port:\n Buffer overflow occurred')
@@ -133,8 +133,8 @@ class MTSAPI():
         write_array.append(self.CTRL_READ)
         for byte in range(0, 2):
             write_array.append((address >> (byte*8)) & 0xFF)
-        self.port.write(write_array)
-        read_array = bytearray(self.port.read(5))
+        self._port.write(write_array)
+        read_array = bytearray(self._port.read(5))
         # print 'read:', repr(read_array)
         rtrn_val = read_array[0]
         if ord(self.RTRN_SUCCESS) != rtrn_val:
