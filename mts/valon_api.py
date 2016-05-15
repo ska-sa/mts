@@ -221,7 +221,6 @@ class MTSvalon(Synthesizer):
             raise RuntimeError('External reference request failed:\nfunction %s, line no %s\n' % (__name__, inspect.currentframe().f_lineno))
         return ref_set_success
 
-
 if __name__ == '__main__':
 
     parser = OptionParser(version="%prog 0.1")
