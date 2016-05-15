@@ -227,7 +227,7 @@ if __name__ == '__main__':
     parser.add_option('-p', '--port',
                       action='store',
                       dest='tty',
-                      default='/dev/ttyUSB0',
+                      default='/dev/ttyUSB1',
                       help='Set Serial Port, default is \'%default\'.')
     parser.add_option('-f', '--freq',
                       action='store',
@@ -252,6 +252,8 @@ if __name__ == '__main__':
                       default=False,
                       help='Do not initiate default synthesizer, use values as read from flash memory.')
     (opts, args) = parser.parse_args()
+
+    print 'Using port', opts.tty
 
     # MTS uses only one of the available synthesizers (currently SYNTH 2)
     synth = MTSvalon(valon_synth.SYNTH_B, opts.tty, restore=opts.restore)
