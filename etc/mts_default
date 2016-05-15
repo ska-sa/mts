@@ -1,72 +1,72 @@
 # Limits and parametes for KAT-7 MTS
 [kat7]
-# Baseband is over the region 0 to 400MHz
+    # Baseband is over the region 0 to 400MHz
     min_base_freq_mhz = 0.
     max_base_freq_mhz = 400.
 
 # Module 1 -- uncorrelated source ucs1
 [ucs1]
-# Attenuation range for both source signals
+    # Attenuation range for both source signals
     min_atten = 0.
     max_atten = 31.5
-# Noise source has range to 18GHz, but is LP to fc=450MHz
+    # Noise source has range to 18GHz, but is LP to fc=450MHz
     min_noise_freq_mhz = 1.
     max_noise_freq_mhz = 450.
-# Valon has range to 4.4GHz, but is LP to fc=450GHz
+    # Valon has range to 4.4GHz, but is LP to fc=450GHz
     min_cw_freq_mhz = 137.
     max_cw_freq_mhz = 450.
 
 # Module 2 -- uncorrelated source ucs1
 [ucs2]
-# Attenuation range for both source signals
+    # Attenuation range for both source signals
     min_atten = 0.
     max_atten = 31.5
-# Noise source has range to 18GHz, but is LP to fc=450MHz
+    # Noise source has range to 18GHz, but is LP to fc=450MHz
     min_noise_freq_mhz = 1.
     max_noise_freq_mhz = 450.
-# Valon has range to 4.4GHz, but is LP to fc=450GHz
+    # Valon has range to 4.4GHz, but is LP to fc=450GHz
     min_cw_freq_mhz = 137.
     max_cw_freq_mhz = 450.
 
 # Module 3 -- correlated source cs1
 [cs1]
-# Attenuation range for both source signals
+    # Attenuation range for both source signals
     min_atten = 0.
     max_atten = 31.5
-# Noise source has range to 18GHz, but is LP to fc=450MHz
+    # Noise source has range to 18GHz, but is LP to fc=450MHz
     min_noise_freq_mhz = 1.
     max_noise_freq_mhz = 450.
-# Valon has range to 4.4GHz, but is LP to fc=450GHz
+    # Valon has range to 4.4GHz, but is LP to fc=450GHz
     min_cw_freq_mhz = 137.
     max_cw_freq_mhz = 450.
 
 # Module 4 -- correlated source comb1
 [comb1]
-# Attenuation range for both source signals
+    # Attenuation range for both source signals
     min_atten = 0.
     max_atten = 31.5
-# Ouput has bandpass filter between 72MHz and 328MHz
+    # Ouput has bandpass filter between 72MHz and 328MHz
     min_noise_freq_mhz = 72.
     max_noise_freq_mhz = 328.
-# Valon CW output still limited by min freq of 137MHz
+    # Valon CW output still limited by min freq of 137MHz
     min_cw_freq_mhz = 137.
     max_cw_freq_mhz = 328.
-# Source input connected to combiner
+    # Source input connected to combiner
     ucs = 'ucs1'
     cs  = 'cs1'
 
 # Module 5 -- correlated source comb2
 [comb2]
-# Attenuation range for both source signals
+    # Attenuation range for both source signals
     min_atten = 0.
     max_atten = 31.5
-# Ouput has bandpass filter between 72MHz and 328MHz
+    # Ouput has bandpass filter between 72MHz and 328MHz
     min_noise_freq_mhz = 72.
     max_noise_freq_mhz = 328.
-# Valon CW output still limited by min freq of 137MHz
+    # Valon CW output still limited by min freq of 137MHz
     min_cw_freq_mhz = 137.
     max_cw_freq_mhz = 328.
-# Source input connected to combiner
+    # Source input connected to combiner
     ucs = 'ucs2'
     cs  = 'cs1'
 
