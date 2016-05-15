@@ -38,10 +38,11 @@ class MTSAPI():
         # Set up serial comms
         self._port = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
         # Establish communication
-        try:
-            self._port.open()
-        except Exception as e:
-            raise DeviceError('Fatal', str(e))
+        if not self._port.isOpen():
+            try:
+                self._port.open()
+            except Exception as e:
+                raise DeviceError('Fatal', str(e))
         # Initiate data transfer
         if self._port.isOpen():
             print 'Port %s is open' % self._port.name
