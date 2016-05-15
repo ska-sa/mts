@@ -55,7 +55,6 @@ max_cw_freq_mhz = 328.
 ucs = 'ucs1'
 cs  = 'cs1'
 
-
 # Module 5 -- correlated source comb2
 [comb2]
 # Attenuation range for both source signals
