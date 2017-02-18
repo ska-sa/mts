@@ -17,7 +17,7 @@ command in linux and look for:
 
         Cygnal Integrated Products, Inc. CP210x Composite Device
 
-To connect to the devices use the dmesg command to get the assigned port
+To connect to the devices use the `dmesg` command to get the assigned port
 
     $ dmesg | grep FTDI  # Valon
     FTDI USB Serial Device converter now attached to ttyUSB0
